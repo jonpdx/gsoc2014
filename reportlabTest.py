@@ -126,11 +126,11 @@ canvas.drawString(50,100, "Histogram of Sizes of Mineral Group")
 #
 #
 #### Boxplot of BSE values for Mineral Group
-bseMineralShade = '/home/jon/Desktop/Boxplot of BSE values for Mineral Groups DATA HAS ZEROS.png'
+bseMineralShade = '/home/jon/Desktop/Scatter Plot of BSE values for Mineral Groups.png'
 canvas.drawImage(bseMineralShade, 350, 100, width=7*cm, height=7*cm, preserveAspectRatio=True)
 #Label Image
-canvas.drawString(350,100, "Boxplot of BSE values for Mineral Group" )
-canvas.drawString(350,90, "DATA Still has Dummy Zeros")
+canvas.drawString(350,100, "Scatter Plot of BSE values for Mineral Group" )
+canvas.drawString(350,90, "Hope to turn into Boxplot Later")
 #
 #
 
