@@ -120,6 +120,16 @@ def mineralGroupIDMultiBox(SuperBox, NumberOfClusters, BoxIDNumber):
     
     
     ######Step 5 - Make Plots/Figures of Results
+    ##A) Creates Following Figures
+    # 1) Picture of Cropped BSE in GreyScale
+    # 2) Histogram of BSE values for Cropped area
+    # 3) Plot the contour results of image
+    # 4) Plot the reasign grain results of image
+    # 5) NEED TO MAKE SCATTER PLOT of Mineral Grain Size !!!!!!!!!
+    # 6) Scatter Plot of BSE Values for each Mineral group
+    #
+    # B)Export the data to TXT
+    # 1)Export Label and BSE Value to TXT
     
     ############
     # Plot the crop bse image
@@ -130,7 +140,7 @@ def mineralGroupIDMultiBox(SuperBox, NumberOfClusters, BoxIDNumber):
     pl.yticks(())
     #
     #saved file name
-    figureNameContour = 'cropped bse image'
+    figureNameContour = 'croppedBSEimage'
     #
     #saved path and file and ext
     figurePathNameContourExt = figurePath + figureNameContour + str(BoxIDNumber) + figureExt
@@ -140,6 +150,39 @@ def mineralGroupIDMultiBox(SuperBox, NumberOfClusters, BoxIDNumber):
     pl.show()
     ###########
 
+    
+    ##################
+    ###Histogram of BSE values for Cropped area  
+    #########
+    #run histogram on image
+    tiffHistogram = im.histogram()
+
+    #Get X and Y values for Hist into Bar
+    tiffHistSize = np.size(tiffHistogram)
+    #
+    tiffHistBarXVal = range(tiffHistSize)
+    tiffHistBarYVal = tiffHistogram
+
+    #create bar graph
+    pl.bar(tiffHistBarXVal,tiffHistBarYVal)
+
+    #label bar graph
+    pl.ylabel('Counts')
+    pl.xlabel('keV Bucket via Grey Scale Value count from BSE Image')
+
+    #saved file name
+    figureNameShade = 'testShade'
+    #
+    #saved path and file and ext
+    figurePathNameShadeExt = figurePath + figureNameShade + str(BoxIDNumber) +  figureExt
+    #
+    pl.savefig(figurePathNameShadeExt)
+
+    #show bar graph
+    plt.show()
+    ##################
+    
+    
 
     ##############
     # Plot the contour results of image
@@ -182,6 +225,70 @@ def mineralGroupIDMultiBox(SuperBox, NumberOfClusters, BoxIDNumber):
     pl.savefig(figurePathNameShadeExt)
     pl.show()
     ##################
+ 
+    
+    
+    ####################################
+    ##Scatter Plot of BSE Values for each Mineral group
+    ##################
+    #Resize Arrays into 1D, so can combine
+    labelArrayReshape = np.reshape(label, (62500) )
+    imarrayArrayReshape = np.reshape(imarray, (62500) )
+    #
+    x = labelArrayReshape
+    y = imarrayArrayReshape
+    #
+    pl.figure();
+    #
+    pl.scatter(x, y)
+    #
+    pl.ylabel('Pixel Counts')
+    pl.xlabel('Mineral ID Number')
+    #
+    #saved file name
+    figureNameShade = 'mineralPixelSize'
+    #
+    #saved path and file and ext
+    figurePathNameShadeExt = figurePath + figureNameShade + str(BoxIDNumber) +  figureExt
+    #
+    pl.show()
+    ####################################
+    
+    
+    
+
+    ####################################
+    ##Scatter Plot of BSE Values for each Mineral group
+    ##################
+    #Resize Arrays into 1D, so can combine
+    labelArrayReshape = np.reshape(label, (62500) )
+    imarrayArrayReshape = np.reshape(imarray, (62500) )
+    #
+    x = labelArrayReshape
+    y = imarrayArrayReshape
+    #
+    pl.figure();
+    #
+    pl.scatter(x, y)
+    #
+    pl.axis([0, 200, 0, 300])
+    #
+    pl.ylabel('BSE 256 Values')
+    pl.xlabel('Mineral ID Number')
+    #
+    #saved file name
+    figureNameShade = 'mineralBSEValues'
+    #
+    #saved path and file and ext
+    figurePathNameShadeExt = figurePath + figureNameShade + str(BoxIDNumber) +  figureExt
+    #
+    pl.show()
+    ####################################
+
+    
+    
+
+    
     
     #####Step 6 - Save Arrays of Mineral ID and BSE Shade Value to TXT File
     np.savetxt(figurePath + 'labelTest' + str(BoxIDNumber) + '.txt', label)
@@ -277,57 +384,7 @@ def bseHistFull(GraphName):
     return
 
 
-
-def bseHistCrop(GraphName):
-    #Import Libraries
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import Image
-    #
-    #
-    # Get SEM BSE Tiff Data
-    tiffFile = ('/home/jon/Desktop/gsoc2014/semData2014/CML0615(13).tif')
-    imFull  = Image.open(tiffFile)
-    #
-    ###Crop
-    #Create Clip Box
-    x1 = 0
-    y1 = 0
-    x2 = 250
-    y2 = 250
-    box=(x1, y1, x2, y2)
-    #
-    im_crop=imFull.crop(box)
-    #
-    im = im_crop
-    
-    #########
-    #run histogram on image
-    tiffHistogram = im.histogram()
-
-    #Get X and Y values for Hist into Bar
-    tiffHistSize = np.size(tiffHistogram)
-    #
-    tiffHistBarXVal = range(tiffHistSize)
-    tiffHistBarYVal = tiffHistogram
-
-    #create bar graph
-    plt.bar(tiffHistBarXVal,tiffHistBarYVal)
-
-    #label bar graph
-    plt.ylabel('Counts')
-    plt.xlabel('keV Bucket via Grey Scale Value count from BSE Image')
-    plt.title(GraphName)
-
-
-    plt.savefig( GraphName + '.png')
-
-    #show bar graph
-    plt.show()
-    
-    return
-
-
+# <codecell>
 
 ####################
 ####################
